@@ -1,0 +1,233 @@
+---
+title: "Capstone Project Report"
+author: "Mahima Tendulkar"
+date: "29 December 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Capston Project Report
+            
+##Analaysis of IBM-HR Dataset
+
+###About IBM:
+
+IBM (International Business Machines Corporation) is an American multinational technology company headquartered in Armonk, New York, United States, with operations in over 170 countries.
+IBM has a large and diverse portfolio of products and services. As of 2016, these offerings fall into the categories of cloud computing, cognitive computing, commerce, data and analytics, Internet of Things,IT infrastructure, mobile, and security.
+
+IBM Cloud includes infrastructure as a service (IaaS), software as a service (SaaS) and platform as a service (PaaS) offered through public, private and hybrid cloud delivery models. For instance, the IBM Bluemix PaaS enables developers to quickly create complex websites on a pay-as-you-go model. IBM SoftLayer is a dedicated server, managed hosting and cloud computing provider, which in 2011 reported hosting more than 81,000 servers for more than 26,000 customers.IBM also provides Cloud Data Encryption Services (ICDES), using cryptographic splitting to secure customer data.
+
+Hardware designed by IBM for these categories include IBM's POWER microprocessors, which are employed inside many console gaming systems, including Xbox 360,PlayStation 3, and Nintendo's Wii U.IBM Secure Blue is encryption hardware that can be built into microprocessors, and in 2014, the company revealed it was investing $3 billion over the following five years to design a neural chip that mimics the human brain, with 10 billion neurons and 100 trillion synapses, but that uses just 1 kilowatt of power.In 2016, the company launched all-flash arrays designed for small and midsized companies, which includes software for data compression, provisioning, and snapshots across various systems.
+
+![IBM headquaters in Armonk,New York](C:\Users\mahima tendulker\Documents\generateImage.jpg)
+
+###IBM Employees:
+
+IBM has one of the largest workforces in the world, and employees at Big Blue are referred to as "IBMers". The company was among the first corporations to provide group life insurance, survivor benefits, training for women, paid vacations, and training for disabled people.IBM has several leadership development and recognition programs to recognize employee potential and achievements. For early-career high potential employees,IBM sponsors leadership development programs by discipline (e.g., general management),human resources, finance. Each year, the company also selects 500 IBMers for the IBM Corporate Service Corps,which has been described as the corporate equivalent of the Peace Corps and gives top employees a month to do humanitarian work abroad.For certain interns, IBM also has a program called Extreme Blue that partners top business and technical students to develop high-value technology and compete to present their business case to the company's CEO at internship's end.
+
+![Employees](C:\Users\mahima tendulker\Documents\employees-poznyakov-shutterstock.jpg)
+
+The company also has various designations for exceptional individual contributors such as Senior Technical Staff Member, Research Staff Member, Distinguished Engineer, and Distinguished Designer.The company's most prestigious designation is that of IBM Fellow.
+
+###Overview of the dataset:
+
+This dataset gives the information about the factors that lead to employee attrition and helps us extract answers for the qestions like "how the distance from home can effect the job involvment of an employee?", "how does the job environment plays role in determining job satisfaction?", "how the hourly rate of doing work and income are realted?", etc.
+
+The survey was carried out and the information is layed in the form of dataset consisting of rows and columns.
+
+Description of some relavant columns is as follows:
+
+1.Age:Gives the age of employee in numbers.
+
+2.Attrition: If there is decline in the performance of employee='Yes'
+             If there is no decline in performance of employee='NO'
+             
+3.Business Travel:gives informantion of the frequency of the business tours an employee has to go for.             
+
+4.DailyRate:Rate at which an employee works daily.
+
+5.Department:The section of the company in which the employee works.
+
+6.DistanceFromHome:how far an employee lives from his workplace.
+
+7.Education:1 'Below College' 2 'College' 3 'Bachelor' 4 'Master' 5 'Doctor'
+
+8.Education Field:Qualification of employee
+
+9.EnvironmentSatisfaction 1 'Low' 2 'Medium' 3 'High' 4 'Very High'
+
+10.Gender:sex of employee 'Male' or 'Female'
+
+11.JobInvolvement:1 'Low' 2 'Medium' 3 'High' 4 'Very High'
+
+12.JobSatisfaction:1 'Low' 2 'Medium' 3 'High' 4 'Very High'
+
+13:PerformanceRating:1 'Low' 2 'Good' 3 'Excellent' 4 'Outstanding'
+
+14:RelationshipSatisfaction:1 'Low' 2 'Medium' 3 'High' 4 'Very High'
+
+15.WorkLifeBalance 1 'Bad' 2 'Good' 3 'Better' 4 'Best'
+
+16.MaritalStatus:'Married','single','divorced'
+
+###Regression Model:
+
+####Regression Model 1 
+formula--> MonthlyIncome=ï..Age+ DistanceFromHome+Relationship Satisfaction+ EnvironmentSatisfaction+ joblevel + JobInvolvement+NumCompaniesWorked+ WorkLifeBalance
+
+```{r,echo=TRUE}
+# Read the data
+pdata <- read.csv(file="IBM-HR-Employee-Attrition.csv")
+MyData <- pdata[-c(2,3,5,8,9,10,12,16,18,22,23)]
+attach(MyData)
+# Model 1
+M1 <- lm(MonthlyIncome~ï..Age
+                  +DistanceFromHome
+                  +RelationshipSatisfaction
+                  +EnvironmentSatisfaction
+                  +JobLevel
+                  +JobInvolvement
+                  +NumCompaniesWorked
+                  +WorkLifeBalance,
+         data=MyData)
+         
+summary(M1)
+```
+Through the above regression model,we established the effect of Monthly income on the various other factors with the simplest model. We regressed Age, DistanceFromHome,Relationship satisfaction, EnvironmentSatisfaction, job level,JobInvolvement,NumCompaniesWorked,worklife balance.We estimated model, using linear least squares.
+
+
+####Regression Model 2
+
+formula--->WorkLifeBalance=TotalWorkingYears+ MonthlyIncome+ MonthlyRate+ RelationshipSatisfaction+ JobLevel  +PerformanceRating +PercentSalaryHike
+```{r,echo=TRUE}
+# Model 2
+M2 <- lm(WorkLifeBalance~TotalWorkingYears
+                  +MonthlyIncome
+                  +MonthlyRate
+                  +RelationshipSatisfaction
+                  +JobLevel
+                  +PerformanceRating
+                  +PercentSalaryHike
+                ,
+         data=MyData)
+         
+summary(M2)
+```
+Through the above regression model,we established the effect of Work Life Balance on the various other factors like Total Working Years,Monthly Income,Monthly Rate,Relationship Satisfaction,Job Level,Performance Rating,PercentSalary Hike .We estimated model, using linear least squares.
+
+p value is more positive in model 2 whereas R value is more positive in model 1
+
+
+###Summary of Dataset
+
+```{r,echo=TRUE}
+# Summarize the Data
+library(psych)
+describe(pdata)
+```
+
+###Two-way contingency table based on Gender and Attrition
+```{r,echo=TRUE}
+table1 <- xtabs(~ Gender + Attrition, data = pdata)
+table1
+```
+18% of males show attrition in their performance whereas 15% of females show attrition.
+
+###Two-way contingency table based on Distance From Home and Attrition in the performance
+```{r,echo=TRUE}
+table2 <- xtabs(~  WorkLifeBalance+ Attrition, data = pdata)
+table2
+```
+People having work life balance of 3-i.e better balance have low percentage of people having attrition.
+
+
+###Two-way contingency table based on Job Satisfaction and Attrition in the performance
+```{r,echo=TRUE}
+table3 <- xtabs(~  JobSatisfaction+ Attrition, data = pdata)
+table3
+```
+group of people having higher Job Satisfaction have lower percentage of people whoes performance is reduced.
+
+
+###Two-way contingency table based on Relationship Satisfaction and Attrition in the performance
+```{r,echo=TRUE}
+table4 <- xtabs(~  RelationshipSatisfaction+ Attrition, data = pdata)
+table4
+```
+people having better Relationship satisfaction have low number of people who have show attrition in their performance.
+
+###Boxplots
+
+
+```{r,echo=TRUE}
+boxplot(MonthlyIncome~WorkLifeBalance, data=pdata, horizontal=TRUE,
+        xlab="attrition", las=1,
+        col=c("red","blue","green","yellow"),
+        main="boxplot of worklife balance and attrition in performance of employees")
+```
+
+
+```{r,echo=TRUE}
+boxplot(PercentSalaryHike~JobSatisfaction, data=pdata, horizontal=TRUE,
+        xlab="Percent salary Hike", las=1,
+        col=c("red","blue","green","yellow"),
+        main="boxplot of Percent Salary hike and Job Satisfaction")
+```
+
+###Histograms
+
+1)Work Life Balance
+```{r,echo=TRUE}
+
+hist(pdata$WorkLifeBalance, 
+     main="Histogram of Work Life balance",
+     col=c("blue"),
+     xlab="work life balance" )
+
+```
+
+
+Histogram shows that highest number of employees have better work life balance in IBM
+
+2)Job Satisfaction
+```{r,echo=TRUE}
+
+hist(pdata$JobSatisfaction, 
+     main="Histogram of Job Satisfaction",
+     col=c("yellow"),
+     xlab="Job Satisfaction level" )
+
+```
+
+
+histogram shows that majority employees have higher level of job satisfaction 
+
+3)monthly income
+```{r,echo=TRUE}
+
+hist(pdata$MonthlyIncome, 
+     main="Histogram of Monthly Income",
+     col=c("green"),
+     xlab="Monthly income in rupees" )
+
+```
+
+
+Majority of people have their monthly salary between 0-10,000 Rupees.
+
+
+###Two way factorial ANOVA
+considered parameters: Work life  balance,percent salaryhike and job satisfaction.
+```{r,echo=TRUE}
+WorkLifeBalance <- factor(WorkLifeBalance)
+fit <- aov(PercentSalaryHike~WorkLifeBalance*JobSatisfaction)
+summary(fit)
+```
+
+##Result:
+By using box-plots, contingency tables,histograms we can deduce the dependencies of variables like work life balance, job involvement, monthly income, job satisfaction etc. causing the attrition in the performance of the employee. 
+
+##Conclusion:
+From this analysis we can conclude that the factors like Age, Distance From Home, Percent Salary Hike, Environment Satisfaction, Hourly Rate,Job Involvement,Number of Companies Worked cause impact on the work life balance of the people and hence effect the attrition. We can easily make out from the boxplots and histograms.
